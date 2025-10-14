@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e53935">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Удостоверение личности">
+  <title>Удостоверение личности</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="kaspi.png">
+
+<!-- iOS -->
+<link rel="apple-touch-icon" sizes="192x192" href="kaspi.png">
+
+<!-- Android / Chrome -->
+<link rel="manifest" href="/manifest.json">
+  <!-- Шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Библиотека для QR -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <span class="back-arrow">←</span>
+    <div class="header-title">Удостоверение личности</div>
+    <div class="menu-btn" onclick="toggleMenu()">⋯</div>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <div class="dropdown-item" onclick="resetPhoto()">Сбросить фото</div>
+    </div>
+  </div>
+
+  <!-- Затемняющий фон для QR-меню -->
+  <div class="overlay" id="qrOverlay" onclick="hideSlideQR()"></div>
+
+  <!-- Нижнее слайд-меню для QR-кода -->
+  <div class="qr-slide-menu" id="qrSlideMenu">
+    <div class="qr-drag-handle" id="qrDragHandle"></div>
+    <div class="qr-slide-header">
+      <div class="qr-slide-title">Удостоверение личности</div>
+      <button class="qr-close-btn" onclick="hideSlideQR()">×</button>
+    </div>
+    <div class="qr-slide-content">
+      <div class="qr-modal-subtitle">Покажите QR-код сотруднику</div>
+      <div id="slideQrcode"></div>
+      <div class="qr-modal-or">или скажите код</div>
+      <div class="qr-modal-code" id="slideCodeNumber"></div>
+    </div>
+  </div>
+
+  <div class="tabs-container">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(0)">Документ</div>
+      <div class="tab" onclick="switchTab(1)">Реквизиты</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="section active" id="docSection">
+      <input type="file" accept="image/*" id="imageInput" />
+      <img id="idImage" class="id-card-img" style="display:none;" />
+    </div>
+
+    <div class="section" id="detailsSection">
+      <div class="field">
+        <label>ФИО</label>
+        <div class="field-container">
+          <input type="text" id="fullnameField">
+          <button class="copy-btn" onclick="copyToClipboard('fullnameField')">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>ИИН</label>
+        <div class="field-container">
+          <input type="text" id="iinField">
+          <button class="copy-btn" onclick="copyToClipboard('iinField')">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>Дата рождения</label>
+        <div class="field-container">
+          <input type="text" id="dobField">
+          <button class="copy-btn" onclick="copyToClipboard('dobField')">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>Номер документа</label>
+        <div class="field-container">
+          <input type="text" id="passportField">
+          <button class="copy-btn" onclick="copyToClipboard('passportField')">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>Дата выдачи</label>
+        <div class="field-container">
+          <input type="text" id="issueField">
+          <button class="copy-btn" onclick="copyToClipboard('issueField')">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>Срок действия</label>
+        <div class="field-container">
+          <input type="text" id="expiryField">
+          <button class="copy-btn" onclick="copyToClipboard('expiryField')">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button class="action-btn" id="presentBtn" onclick="showSlideQR()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M3 3h6v6H3V3zm12 0h6v6h-6V3zM3 15h6v6H3v-6zm12 6h6v-6h-6v6z"/>
+      </svg>
+      Предъявить документ
+    </button>
+    <button class="action-btn btn-outline" id="sendDetailsBtn" onclick="sendDetails()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#1976d2" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/>
+      </svg>
+      Отправить реквизиты
+    </button>
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>
