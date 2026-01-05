@@ -9,6 +9,8 @@
   color: #333;
   align-items: center;
   cursor: pointer; /* чтобы выглядело как кнопка */
+  background-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 body {
   font-family: 'Roboto', sans-serif;
