@@ -271,7 +271,7 @@ window.OneSignal = window.OneSignal || [];
 
 OneSignal.push(function() {
   OneSignal.init({
-    appId: "ТВОЙ_APP_ID", // вставь сюда свой appId
+    appId: "f34e4bdc-a8b8-464f-9ee9-d2925580f598", // вставь сюда свой appId
     notifyButton: { enable: false } // отключаем стандартную кнопку
   });
 
