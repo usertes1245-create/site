@@ -33,7 +33,32 @@
       <div class="dropdown-item" onclick="resetPhoto()">Сбросить фото</div>
     </div>
   </div>
-
+  <!-- Баннер для уведомления -->
+<div id="notify-banner" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1e90ff;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+    display: none;
+    z-index: 9999;
+">
+  Дайте разрешение на уведомления о <b>важных изменениях сайта</b>
+  <button id="notify-btn" style="
+      background: white;
+      color: #1e90ff;
+      border: none;
+      padding: 5px 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+  ">Разрешить</button>
+</div>
   <!-- Затемняющий фон для QR-меню -->
   <div class="overlay" id="qrOverlay" onclick="hideSlideQR()"></div>
 
