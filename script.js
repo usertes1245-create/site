@@ -267,7 +267,37 @@ function formatDate() {
   const now = new Date();
   return now.toLocaleString('ru-RU');
 }
+window.OneSignal = window.OneSignal || [];
 
+OneSignal.push(function() {
+  OneSignal.init({
+    appId: "ТВОЙ_APP_ID", // вставь сюда свой appId
+    notifyButton: { enable: false } // отключаем стандартную кнопку
+  });
+
+  // Проверяем, включены ли уведомления
+  OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+    if (!isEnabled) {
+      // Показываем кастомный баннер
+      const banner = document.getElementById('notify-banner');
+      if (banner) banner.style.display = 'block';
+    }
+  });
+});
+
+// Обработчик кнопки на баннере
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('notify-btn');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      OneSignal.push(function() {
+        OneSignal.registerForPushNotifications({ modalPrompt: true });
+      });
+      const banner = document.getElementById('notify-banner');
+      if (banner) banner.style.display = 'none';
+    });
+  }
+});
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', function() {
   switchTab(0); // Активируем первую вкладку
