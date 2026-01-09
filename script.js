@@ -267,37 +267,7 @@ function formatDate() {
   const now = new Date();
   return now.toLocaleString('ru-RU');
 }
-window.OneSignal = window.OneSignal || [];
 
-OneSignal.push(function() {
-  OneSignal.init({
-    appId: "f34e4bdc-a8b8-464f-9ee9-d2925580f598", // вставь сюда свой appId
-    notifyButton: { enable: false } // отключаем стандартную кнопку
-  });
-
-  // Проверяем, включены ли уведомления
-  OneSignal.isPushNotificationsEnabled(function(isEnabled) {
-    if (!isEnabled) {
-      // Показываем кастомный баннер
-      const banner = document.getElementById('notify-banner');
-      if (banner) banner.style.display = 'block';
-    }
-  });
-});
-
-// Обработчик кнопки на баннере
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.getElementById('notify-btn');
-  if (btn) {
-    btn.addEventListener('click', function() {
-      OneSignal.push(function() {
-        OneSignal.registerForPushNotifications({ modalPrompt: true });
-      });
-      const banner = document.getElementById('notify-banner');
-      if (banner) banner.style.display = 'none';
-    });
-  }
-});
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', function() {
   switchTab(0); // Активируем первую вкладку
